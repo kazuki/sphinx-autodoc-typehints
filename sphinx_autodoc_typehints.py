@@ -87,6 +87,10 @@ def process_docstring(app, what, name, obj, options, lines):
             type_hints = get_type_hints(obj)
         except AttributeError:
             return
+        except TypeError:
+            # workaround
+            # https://github.com/agronholm/sphinx-autodoc-typehints/issues/12
+            return
 
         for argname, annotation in type_hints.items():
             formatted_annotation = format_annotation(annotation)
